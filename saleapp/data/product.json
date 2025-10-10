@@ -1,0 +1,58 @@
+[
+  {
+    "id": "1",
+    "name": "Dell",
+    "image": "https://images-na.ssl-images-amazon.com/images/I/61aOEheWDOL.jpg",
+    "price": 100000,
+    "cate_id": 1
+  },
+  {
+    "id": "2",
+    "name": "Macbook Air",
+    "image": "https://2tmobile.com/wp-content/uploads/2024/03/macbook-air-m3-13-midnight-2tmobile.jpg",
+    "price": 200000,
+    "cate_id": 1
+  },
+  {
+    "id": "3",
+    "name": "Asus",
+    "image": "https://m.media-amazon.com/images/I/71LXYdhtD3L._AC_SL1500_.jpg",
+    "price": 300000,
+    "cate_id": 1
+  },
+  {
+    "id": "4",
+    "name": "Dell",
+    "image": "https://minhhightech.com/admin/sanpham/Dell-Latitude-7200_1_6071.jpg",
+    "price": 400000,
+    "cate_id": 3
+  },
+  {
+    "id": "5",
+    "name": "HUAWEI",
+    "image": "https://bizweb.dktcdn.net/100/506/962/products/72257-huawei-pura-80-pro-1-d3e7134c-c2ba-4906-9108-a6fc31a0442b.jpg?v=1750527667163",
+    "price": 500000,
+    "cate_id": 2
+  },
+  {
+    "id": "6",
+    "name": "SamSung Galaxy Ultra",
+    "image": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/s/s/ss-s24-ultra-xam-222.png",
+    "price": 600000,
+    "cate_id": 2
+  },
+  {
+    "id": "7",
+    "name": "SamSung Galaxy A15",
+    "image": "https://www.didongmy.com/vnt_upload/product/12_2023/thumbs/(600x600)_samsung_galaxy_a15_4g_xanh_thumb_didongmy_600x600.png",
+    "price": 700000,
+    "cate_id": 2
+  },
+  {
+    "id": "8",
+    "name": "iPhone 14 Pro Max",
+    "image": "https://traidepbaniphone.com/thumbs/760x540x2/upload/product/iphone-14-pro-tim-3-camera-3978.png",
+    "price": 800000,
+    "cate_id": 2
+  }
+]
