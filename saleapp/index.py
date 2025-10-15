@@ -11,13 +11,19 @@ app = Flask(__name__)
 def index():
     q = request.args.get("q")
     cate = request.args.get("cate")
-    cates = dao.load_category()
     products = dao.load_product(q = q, cate = cate)
-    return render_template("index.html", cates= cates, products=products)
+    return render_template("index.html", products=products)
 
-@app.route("/products/<int: id>")
+@app.route("/products/<int:id>")  #int: kieu du lieu, id: ten tham so
 def details(id):
+    prod = dao.get_product_by_id(id)
+    return render_template("product-details.html", prod = prod)
 
-    return render_template("product-details.html")
+@app.context_processor
+def common_attribute():
+    return{
+        "cates": dao.load_category() #bien toan cuc
+    }
+
 if __name__ == "__main__":
     app.run(debug=True)
