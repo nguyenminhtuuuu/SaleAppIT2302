@@ -2,8 +2,7 @@ from itertools import product
 
 from flask import Flask, render_template, request
 from saleapp import dao
-
-app = Flask(__name__)
+from saleapp import app
 
 
 @app.route("/")
