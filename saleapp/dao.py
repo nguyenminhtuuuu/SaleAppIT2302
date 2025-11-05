@@ -27,6 +27,9 @@ def load_product(q = None , cate = None):
 
     return query.all()
 
+def count_product():
+    return Product.query.count() #trả về số lượng sản phẩm mà không phải nạp tất cả sản phẩm lên
+
 def get_product_by_id(id):
     # with open("data/product.json", encoding="utf-8") as f:
     #     products = json.load(f)
