@@ -1,5 +1,7 @@
+import hashlib
 import json
-from models import Category, Product
+from models import Category, Product, User
+from saleapp import app
 
 
 def load_category():
@@ -8,7 +10,7 @@ def load_category():
     return Category.query.all()
 
 
-def load_product(q = None , cate = None):
+def load_product(q = None , cate_id = None, page=None):
     # with open("data/product.json", encoding="utf-8") as f:
     #     products = json.load(f)
     #
@@ -22,10 +24,22 @@ def load_product(q = None , cate = None):
     if q:
         query = query.filter(Product.name.contains(q))
 
-    if cate:
-        query = query.filter(Product.cate_id.__eq__(cate))
+    if cate_id:
+        query = query.filter(Product.cate_id.__eq__(cate_id))
 
+    if page:
+        size = app.config["PAGE_SIZE"]
+        start = (int(page) - 1) * size
+        end = start + size
+        query = query.slice(start, end)
     return query.all()
+
+def auth_user(username, password):
+
+    password = str(hashlib.md5(password.encode("utf-8")).hexdigest())
+    return User.query.filter(User.username.__eq__(username) and User.password.__eq__(password)).first()
+def get_user_by_id(id):
+    return User.query.get(id)
 
 def count_product():
     return Product.query.count() #trả về số lượng sản phẩm mà không phải nạp tất cả sản phẩm lên
@@ -41,4 +55,5 @@ def get_product_by_id(id):
 
 
 if __name__ == "__main__":
-    print(get_product_by_id(1))
+    with app.app_context():
+        print(auth_user("user", "123"))

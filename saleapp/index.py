@@ -1,29 +1,52 @@
-from itertools import product
 import math
-from flask import Flask, render_template, request
-from saleapp import dao
-from saleapp import app
 
+from flask import render_template, request, redirect
+
+from saleapp import app, login
+from saleapp import dao
+from flask_login import login_user
 
 @app.route("/")
-
 def index():
     q = request.args.get("q")
-    cate = request.args.get("cate")
-    products = dao.load_product(q = q, cate = cate) #cate = cate_id
-    pages = math.ceil(dao.count_product()/3)
-    return render_template("index.html", products=products, pages = pages)
+    cate_id = request.args.get("cate_id")
+    page = request.args.get("page")
+    products = dao.load_product(q=q, cate_id=cate_id, page=page)  # cate = cate_id
+    pages = math.ceil(dao.count_product() / app.config["PAGE_SIZE"])
+    return render_template("index.html", products=products, pages=pages)
 
-@app.route("/products/<int:id>")  #int: kieu du lieu, id: ten tham so
+
+@app.route("/products/<int:id>")  # int: kieu du lieu, id: ten tham so
 def details(id):
     prod = dao.get_product_by_id(id)
-    return render_template("product-details.html", prod = prod)
+    return render_template("product-details.html", prod=prod)
+
 
 @app.context_processor
 def common_attribute():
-    return{
-        "cates": dao.load_category() #bien toan cuc
+    return {
+        "cates": dao.load_category()  # bien toan cuc
     }
+
+@app.route("/login", methods=['get', 'post'])
+def login_my_user():
+
+    if
+
+    if request.method.__eq__("POST"):
+        username = request.form.get("username")
+        password = request.form.get("password")
+
+        user = dao.auth_user(username, password)
+
+        if user:
+            login_user(user)
+            return redirect("/")
+    return render_template("login.html")
+
+@login.user_loader
+def get_user(user_id):
+    return dao.get_user_by_id(user_id)
 
 if __name__ == "__main__":
     app.run(debug=True)
