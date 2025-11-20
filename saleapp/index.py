@@ -4,7 +4,7 @@ from flask import render_template, request, redirect
 
 from saleapp import app, login
 from saleapp import dao
-from flask_login import login_user
+from flask_login import login_user, current_user
 
 @app.route("/")
 def index():
@@ -31,7 +31,10 @@ def common_attribute():
 @app.route("/login", methods=['get', 'post'])
 def login_my_user():
 
-    if
+    if current_user.is_authenticated: # nếu đã đăng nhập rồi thì trả về trang chủ luôn
+        return redirect("/")
+
+    err_msg = None
 
     if request.method.__eq__("POST"):
         username = request.form.get("username")
@@ -42,11 +45,18 @@ def login_my_user():
         if user:
             login_user(user)
             return redirect("/")
-    return render_template("login.html")
+
+        else: # đăng nhập không thành công
+            err_msg = "Tài khoản hoặc mật khẩu không đúng!"
+
+    return render_template("login.html", err_msg=err_msg)
+
 
 @login.user_loader
 def get_user(user_id):
     return dao.get_user_by_id(user_id)
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

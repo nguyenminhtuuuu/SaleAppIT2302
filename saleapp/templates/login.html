@@ -2,6 +2,14 @@
 {%block title%}Trang đăng nhập{%endblock%}
 {%block content%}
 <h3 class="text-info text-center mt-3">ĐĂNG NHẬP</h3>
+
+{% if err_msg%}
+
+
+<div class="alert alert-danger">{{err_msg}}</div>
+
+{%endif%}
+
 <form method="post">
     <div class="form-floating mb-3 mt-3">
         <input type="text" class="form-control" id="username" placeholder="Nhập tên đăng nhập" name="username">
