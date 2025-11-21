@@ -1,7 +1,7 @@
 import json
 from xmlrpc.client import DateTime
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, Float, ForeignKey, Boolean, DateTime, Enum
+from sqlalchemy import Column, Integer, String, Float, ForeignKey, Boolean, DateTime, Enum, Text
 from sqlalchemy.orm import relationship
 from saleapp import  db, app
 from flask_login import UserMixin
@@ -33,24 +33,25 @@ class Product(Base):
     image = Column(String(300), default="https://images-na.ssl-images-amazon.com/images/I/61aOEheWDOL.jpg")
     price = Column(Float, default=0.0)
     cate_id = Column(Integer, ForeignKey(Category.id), nullable=False)
+    description = Column(Text)
 
 
 if __name__ == "__main__":
     with app.app_context():
-        # db.create_all()
-        #
-        # c1 = Category(name="laptop")
-        # # print(c1)
-        # c2 = Category(name="Mobile")
-        # c3 = Category(name="Tablet")
-        #
-        # db.session.add_all([c1,c2,c3])
-        #
-        # with open("data/product.json", encoding="utf-8") as f:
-        #     products = json.load(f)
-        #
-        #     for p in products:
-        #         db.session.add(Product(**p))
+        db.create_all()
+
+        c1 = Category(name="laptop")
+        # print(c1)
+        c2 = Category(name="Mobile")
+        c3 = Category(name="Tablet")
+
+        db.session.add_all([c1,c2,c3])
+
+        with open("data/product.json", encoding="utf-8") as f:
+            products = json.load(f)
+
+            for p in products:
+                db.session.add(Product(**p))
 
         import hashlib
         u = User(name="User", username="user", password=str(hashlib.md5("123".encode("utf-8")).hexdigest()))

@@ -13,10 +13,24 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/?cate_id={{c.id}}">{{c.name}}</a>
                 </li>
-                {%endfor%}
-                 <li class="nav-item">
+                {% endfor %}
+
+                {% if current_user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link active" href="/login">
+                        <img src="{{current_user.avatar}}" width="20">
+                        Chào {{current_user.name}}
+                    </a>
+                    <li class="nav-item">
+                    <a class="nav-link active" href="/logout">&#128105;Đăng xuất</a>
+                </li>
+                </li>
+                {% else %}
+                <li class="nav-item">
                     <a class="nav-link active" href="/login">&#128105;Đăng nhập</a>
                 </li>
+                {% endif %}
+
             </ul>
             <form class="d-flex" method="get">
                 <input class="form-control me-2" type="text" placeholder="Tìm sản phẩm..." name="q">

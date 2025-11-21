@@ -1,10 +1,8 @@
 import math
-
 from flask import render_template, request, redirect
-
-from saleapp import app, login
+from saleapp import app, login, admin
 from saleapp import dao
-from flask_login import login_user, current_user
+from flask_login import login_user, current_user, logout_user
 
 @app.route("/")
 def index():
@@ -52,6 +50,12 @@ def login_my_user():
     return render_template("login.html", err_msg=err_msg)
 
 
+@app.route("/logout")
+def logout_my_user():
+    logout_user()
+    return redirect("/login")
+
+
 @login.user_loader
 def get_user(user_id):
     return dao.get_user_by_id(user_id)
@@ -59,4 +63,4 @@ def get_user(user_id):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port = 5000)
