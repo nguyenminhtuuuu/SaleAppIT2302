@@ -55,10 +55,29 @@ def logout_my_user():
     logout_user()
     return redirect("/login")
 
+@app.route("/register")
+def register():
+    return render_template("register.html")
+
 
 @login.user_loader
 def get_user(user_id):
     return dao.get_user_by_id(user_id)
+
+@app.route('/admin-login', methods=['post'])
+def admin_login_process():
+    username = request.form.get("username")
+    password = request.form.get("password")
+
+    user = dao.auth_user(username, password)
+
+    if user:
+        login_user(user)
+        return redirect("/admin")
+
+    else:  # đăng nhập không thành công
+        err_msg = "Tài khoản hoặc mật khẩu không đúng!"
+
 
 
 

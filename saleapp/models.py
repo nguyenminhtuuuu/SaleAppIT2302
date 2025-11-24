@@ -7,7 +7,7 @@ from saleapp import  db, app
 from flask_login import UserMixin
 from enum import Enum as RoleEnum
 
-class UserEnum(RoleEnum):
+class UserRole(RoleEnum):
     USER = 1
     ADMIN = 2
 
@@ -24,7 +24,7 @@ class User(Base, UserMixin):
     username = Column(String(150), unique=True, nullable=False)
     password = Column(String(150), unique=False)
     avatar = Column(String(300), default= "https://bla.edu.vn/wp-content/uploads/2025/09/avatar-fb.jpg")
-    role = Column(Enum(UserEnum), nullable=False, default=UserEnum.USER)
+    role = Column(Enum(UserRole), nullable=False, default=UserRole.USER)
 
 class Category(Base):
     products = relationship('Product', backref="category", lazy=True)
