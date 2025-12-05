@@ -1,5 +1,5 @@
 import math
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, session, jsonify
 from saleapp import app, login, admin, db
 from saleapp import dao
 from flask_login import login_user, current_user, logout_user
@@ -108,7 +108,52 @@ def admin_login_process():
         err_msg = "Tài khoản hoặc mật khẩu không đúng!"
 
 
+@app.route('/cart')
+def cart():
+    session['cart'] = {
+        "1": {
+            "id": "1",
+            "name": "iPhone 15 Promax",
+            "price": 1500,
+            "quantity": 2
+        },
 
+        "2": {
+            "id": "2",
+            "name": "Samsung Galaxy",
+            "price": 1000,
+            "quantity": 1
+        },
+    }
+    return render_template("cart.html")
+
+
+@app.route('/api/carts', methods=['post'])
+def add_to_cart():
+    cart = session.get('cart')
+
+    if not cart:
+        cart = {}
+
+    id = str(request.json.get("id"))
+
+    if id in cart:
+        cart[id]["quantity"] += 1
+    else:
+        cart[id] = {
+            "id": id,
+            "name": request.json.get("name"),
+            "price": request.json.get("price"),
+            "quantity": 1
+        }
+
+        session["cart"] = cart
+        print(session["cart"])
+
+        return jsonify({
+            "total_quantity": 0,
+            "total_amount": 0
+        })
 
 if __name__ == "__main__":
     app.run(debug=True, port = 5000)
